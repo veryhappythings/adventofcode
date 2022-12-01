@@ -3,6 +3,7 @@ package day1
 import (
 	"fmt"
 	"io/ioutil"
+	"sort"
 	"strconv"
 	"strings"
 )
@@ -10,11 +11,7 @@ import (
 type elf []int
 
 func (e *elf) Total() int {
-	total := 0
-	for _, v := range *e {
-		total += v
-	}
-	return total
+	return sum(*e)
 }
 
 func most(values []int) int {
@@ -27,7 +24,15 @@ func most(values []int) int {
 	return highest
 }
 
-func Part1(filename string) {
+func sum(values []int) int {
+	total := 0
+	for _, v := range values {
+		total += v
+	}
+	return total
+}
+
+func readElves(filename string) []elf {
 	content, err := ioutil.ReadFile(filename)
 	if err != nil {
 		panic(err)
@@ -48,10 +53,24 @@ func Part1(filename string) {
 		}
 		e = append(e, converted)
 	}
+	return elves
+}
 
+func Part1(filename string) {
+	elves := readElves(filename)
 	var totals []int
 	for _, e := range elves {
 		totals = append(totals, e.Total())
 	}
 	fmt.Println(most(totals))
+}
+
+func Part2(filename string) {
+	elves := readElves(filename)
+	var totals []int
+	for _, e := range elves {
+		totals = append(totals, e.Total())
+	}
+	sort.Ints(totals)
+	fmt.Println(sum(totals[len(totals)-3:]))
 }
