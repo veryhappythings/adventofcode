@@ -15,6 +15,9 @@ const (
 	Scissors
 )
 
+var VillianLookup map[string]Shape = map[string]Shape{"A": Rock, "B": Paper, "C": Scissors}
+var HeroLookup map[string]Shape = map[string]Shape{"X": Rock, "Y": Paper, "Z": Scissors}
+
 type Round struct {
 	Villain Shape
 	Hero    Shape
@@ -71,26 +74,8 @@ func Part1(filename string) {
 		text := scanner.Text()
 		var round Round
 		match := re.FindStringSubmatch(text)
-		switch match[1] {
-		case "A":
-			round.Villain = Rock
-		case "B":
-			round.Villain = Paper
-		case "C":
-			round.Villain = Scissors
-		default:
-			panic(match[1])
-		}
-		switch match[2] {
-		case "X":
-			round.Hero = Rock
-		case "Y":
-			round.Hero = Paper
-		case "Z":
-			round.Hero = Scissors
-		default:
-			panic(match[2])
-		}
+		round.Villain = VillianLookup[match[1]]
+		round.Hero = HeroLookup[match[2]]
 		tournament = append(tournament, round)
 	}
 
