@@ -3,6 +3,7 @@ package cmd
 import (
 	"adventofcode/internal/day1"
 	"adventofcode/internal/day2"
+	"adventofcode/internal/day3"
 	"fmt"
 	"github.com/spf13/cobra"
 	"os"
@@ -15,6 +16,7 @@ var inputFilename string
 var days [][]func(string) = [][]func(string){
 	{day1.Part1, day1.Part2},
 	{day2.Part1, day2.Part2},
+	{day3.Part1, day2.Part2},
 }
 
 var rootCmd = &cobra.Command{
