@@ -46,5 +46,26 @@ func Part1(filename string) {
 	fmt.Println(total)
 }
 func Part2(filename string) {
+	file, err := os.Open(filename)
+	if err != nil {
+		panic(err)
+	}
+	defer file.Close()
 
+	total := 0
+	re := regexp.MustCompile(`(\d+)-(\d+),(\d+)-(\d+)`)
+	scanner := bufio.NewScanner(file)
+	for scanner.Scan() {
+		text := scanner.Text()
+		match := re.FindStringSubmatch(text)
+		first := assignment{mustInt(match[1]), mustInt(match[2])}
+		second := assignment{mustInt(match[3]), mustInt(match[4])}
+
+		if second.end < first.start || first.end < second.start {
+			continue
+		} else {
+			total += 1
+		}
+	}
+	fmt.Println(total)
 }
