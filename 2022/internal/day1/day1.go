@@ -1,6 +1,7 @@
 package day1
 
 import (
+	"adventofcode/internal/common"
 	"fmt"
 	"io/ioutil"
 	"sort"
@@ -12,16 +13,6 @@ type elf []int
 
 func (e *elf) Total() int {
 	return sum(*e)
-}
-
-func most(values []int) int {
-	highest := 0
-	for _, v := range values {
-		if v > highest {
-			highest = v
-		}
-	}
-	return highest
 }
 
 func sum(values []int) int {
@@ -62,7 +53,7 @@ func Part1(filename string) {
 	for _, e := range elves {
 		totals = append(totals, e.Total())
 	}
-	fmt.Println(most(totals))
+	fmt.Println(common.Most(totals))
 }
 
 func Part2(filename string) {
