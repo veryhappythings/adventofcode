@@ -1,24 +1,16 @@
 package day4
 
 import (
+	"adventofcode/internal/common"
 	"bufio"
 	"fmt"
 	"os"
 	"regexp"
-	"strconv"
 )
 
 type assignment struct {
 	start int
 	end   int
-}
-
-func mustInt(in string) int {
-	out, err := strconv.Atoi(in)
-	if err != nil {
-		panic(err)
-	}
-	return out
 }
 
 func Part1(filename string) {
@@ -34,8 +26,8 @@ func Part1(filename string) {
 	for scanner.Scan() {
 		text := scanner.Text()
 		match := re.FindStringSubmatch(text)
-		first := assignment{mustInt(match[1]), mustInt(match[2])}
-		second := assignment{mustInt(match[3]), mustInt(match[4])}
+		first := assignment{common.MustInt(match[1]), common.MustInt(match[2])}
+		second := assignment{common.MustInt(match[3]), common.MustInt(match[4])}
 
 		if first.start <= second.start && first.end >= second.end {
 			total += 1
@@ -58,8 +50,8 @@ func Part2(filename string) {
 	for scanner.Scan() {
 		text := scanner.Text()
 		match := re.FindStringSubmatch(text)
-		first := assignment{mustInt(match[1]), mustInt(match[2])}
-		second := assignment{mustInt(match[3]), mustInt(match[4])}
+		first := assignment{common.MustInt(match[1]), common.MustInt(match[2])}
+		second := assignment{common.MustInt(match[3]), common.MustInt(match[4])}
 
 		if second.end < first.start || first.end < second.start {
 			continue
