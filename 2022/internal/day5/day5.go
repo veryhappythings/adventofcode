@@ -27,6 +27,15 @@ func clamp(value int, min int, max int) int {
 	return value
 }
 
+func insert(source []byte, index int, value byte) []byte {
+	if len(source) == index {
+		return append(source, value)
+	}
+	source = append(source[:index+1], source[index:]...)
+	source[index] = value
+	return source
+}
+
 func Part1(filename string) {
 	file, err := os.Open(filename)
 	if err != nil {
@@ -78,12 +87,7 @@ func Part1(filename string) {
 		for i := 0; i < inst.quantity; i++ {
 			value := stacks[inst.source][0]
 			stacks[inst.source] = stacks[inst.source][1:]
-			if len(stacks[inst.destination]) == 0 {
-				stacks[inst.destination] = append(stacks[inst.destination], value)
-			} else {
-				stacks[inst.destination] = append(stacks[inst.destination][:1], stacks[inst.destination][:]...)
-			}
-			stacks[inst.destination][0] = value
+			stacks[inst.destination] = insert(stacks[inst.destination], 0, value)
 		}
 	}
 	fmt.Printf("%c\n", stacks)
@@ -92,6 +96,7 @@ func Part1(filename string) {
 			fmt.Printf("%c", s[0])
 		}
 	}
+	fmt.Println()
 }
 
 func Part2(filename string) {
