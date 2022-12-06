@@ -46,5 +46,31 @@ func Part1(filename string) {
 }
 
 func Part2(filename string) {
+	content, err := ioutil.ReadFile(filename)
+	if err != nil {
+		panic(err)
+	}
 
+	var buffer []byte
+	for i, c := range content {
+		buffer = append(buffer, c)
+		// If we don't have 14 yet just keep going
+		if len(buffer) < 14 {
+			continue
+		}
+		// If we have 4 check for a match
+		marker := true
+		for _, b := range buffer {
+			if count(buffer, b) > 1 {
+				marker = false
+				break
+			}
+		}
+		if marker {
+			fmt.Printf("%d, %c\n", i+1, buffer)
+			break
+		}
+		// Prep for next loop by dropping the first char
+		buffer = buffer[1:]
+	}
 }
