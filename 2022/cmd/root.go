@@ -6,6 +6,7 @@ import (
 	"adventofcode/internal/day3"
 	"adventofcode/internal/day4"
 	"adventofcode/internal/day5"
+	"adventofcode/internal/day6"
 	"fmt"
 	"github.com/spf13/cobra"
 	"os"
@@ -21,6 +22,7 @@ var days [][]func(string) = [][]func(string){
 	{day3.Part1, day3.Part2},
 	{day4.Part1, day4.Part2},
 	{day5.Part1, day5.Part2},
+	{day6.Part1, day6.Part2},
 }
 
 var rootCmd = &cobra.Command{
