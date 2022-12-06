@@ -36,7 +36,7 @@ func insert(source []byte, index int, value byte) []byte {
 	return source
 }
 
-func Part1(filename string) {
+func load(filename string) ([]stack, []instruction) {
 	file, err := os.Open(filename)
 	if err != nil {
 		panic(err)
@@ -81,6 +81,10 @@ func Part1(filename string) {
 			}
 		}
 	}
+}
+
+func Part1(filename string) {
+	stacks, instructions := load(filename)
 	fmt.Printf("%c\n", stacks)
 
 	for _, inst := range instructions {
