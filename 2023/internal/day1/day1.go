@@ -1,6 +1,7 @@
 package day1
 
 import (
+	"adventofcode/internal/common"
 	"bufio"
 	"fmt"
 	"os"
@@ -27,8 +28,7 @@ func Part1(filename string) {
 		second := string(matches[len(matches)-1])
 		fmt.Println(first)
 		fmt.Println(second)
-		add, _ := strconv.Atoi(fmt.Sprintf("%s%s", first, second))
-		total += add
+		total += common.MustInt(fmt.Sprintf("%s%s", first, second))
 	}
 	fmt.Println(total)
 
@@ -89,8 +89,7 @@ func Part2(filename string) {
 		matches := FindAllOverlappingMatches(re, text)
 		first := atoi(matches[0])
 		second := atoi(matches[len(matches)-1])
-		add, _ := strconv.Atoi(fmt.Sprintf("%d%d", first, second))
-		total += add
+		total += common.MustInt(fmt.Sprintf("%d%d", first, second))
 	}
 	fmt.Println(total)
 
