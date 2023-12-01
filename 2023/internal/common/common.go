@@ -2,7 +2,7 @@ package common
 
 import "strconv"
 
-func Most(values []int) int {
+func Max(values []int) int {
 	highest := 0
 	for _, v := range values {
 		if v > highest {
