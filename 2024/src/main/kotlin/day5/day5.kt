@@ -18,6 +18,46 @@ fun validate(rules: List<Rule>, update: List<Int>): Boolean {
     return true
 }
 
+fun fix(rules: List<Rule>, update: List<Int>): List<Int> {
+    val original = update.toMutableList()
+    val fixed = mutableListOf<Int>()
+    while (fixed.size < update.size) {
+        val page = original.removeFirst()
+        var candidate = 0
+        do {
+            var allRulesSatisfied = true
+            for (rule in rules) {
+                if (rule.before == page) {
+                    // If our page is in the "before" part of the rule, we need to check every page before the candidate location to see if it's the after part of the rule
+                    for (i in 0 until candidate) {
+                        if (fixed.size > i && fixed[i] == rule.after) {
+                            allRulesSatisfied = false
+                        }
+                    }
+                }
+                if (rule.after == page) {
+                    // If our page in in the "after" part of the rule, we need to check every page after the candidate location to see if it's the before part of the rule
+                    // If it is, we should increment the candidate position to the position of the page that's in the "before" part of the rule
+                    for (i in candidate until fixed.size) {
+                        if (fixed[i] == rule.before) {
+                            allRulesSatisfied = false
+                        }
+                    }
+                }
+                if (!allRulesSatisfied) {
+                    break
+                }
+            }
+            if (!allRulesSatisfied) {
+                candidate++
+            }
+        }
+        while (!allRulesSatisfied && candidate <= fixed.size)
+        fixed.add(candidate, page)
+    }
+    return fixed
+}
+
 fun part1() {
     val stream = File("src/main/resources/day5/input2.txt").inputStream()
     val rules = mutableListOf<Rule>()
@@ -28,8 +68,6 @@ fun part1() {
             rules.add(Rule(split[0].toInt(), split[1].toInt()))
         } else if (it.length > 0) {
             val update = it.split(",").map { it.toInt() }
-            println(update)
-            println(validate(rules, update))
             if(validate(rules, update)) {
                 validMiddlePages.add(update[(update.size/2)])
             }
@@ -39,6 +77,23 @@ fun part1() {
 }
 
 fun part2() {
+    val stream = File("src/main/resources/day5/input2.txt").inputStream()
+    val rules = mutableListOf<Rule>()
+    val validMiddlePages = mutableListOf<Int>()
+    stream.bufferedReader().forEachLine {
+        val split = it.split("|")
+        if (split.size == 2) {
+            rules.add(Rule(split[0].toInt(), split[1].toInt()))
+        } else if (it.isNotEmpty()) {
+            val update = it.split(",").map { it.toInt() }
+            if(!validate(rules, update)) {
+                val fixed = fix(rules, update)
+                println("$update -> $fixed")
+                validMiddlePages.add(fixed[(fixed.size/2)])
+            }
+        }
+    }
+    println(validMiddlePages.reduce(Int::plus))
 }
 
 fun main() {
