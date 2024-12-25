@@ -37,7 +37,6 @@ fun fix(rules: List<Rule>, update: List<Int>): List<Int> {
                 }
                 if (rule.after == page) {
                     // If our page in in the "after" part of the rule, we need to check every page after the candidate location to see if it's the before part of the rule
-                    // If it is, we should increment the candidate position to the position of the page that's in the "before" part of the rule
                     for (i in candidate until fixed.size) {
                         if (fixed[i] == rule.before) {
                             allRulesSatisfied = false
