@@ -22,3 +22,12 @@ fun readGrid(filename: String) : MutableList<MutableList<Char>> {
     }
     return grid
 }
+
+fun printGrid(grid: List<List<Char>>) {
+    for (y in grid.indices) {
+        for (x in grid[y].indices) {
+            print(grid[y][x])
+        }
+        println()
+    }
+}
