@@ -4,6 +4,24 @@ import java.io.File
 
 data class Point(val x: Int, val y: Int)
 
+data class Vec2(val x: Int, val y: Int) {
+    operator fun times(other: Vec2): Vec2 {
+        return Vec2(x * other.x, y * other.y)
+    }
+
+    operator fun times(value: Int): Vec2 {
+        return Vec2(x * value, y * value)
+    }
+
+    operator fun plus(other: Vec2): Vec2 {
+        return Vec2(x + other.x, y + other.y)
+    }
+
+    operator fun minus(other: Vec2): Vec2 {
+        return Vec2(x - other.x, y - other.y)
+    }
+}
+
 /**
  * Read a grid from a file
  * The grid is accessible using `grid[y][x]`
